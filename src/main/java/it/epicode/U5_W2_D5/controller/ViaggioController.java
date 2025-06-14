@@ -2,6 +2,7 @@ package it.epicode.U5_W2_D5.controller;
 
 import it.epicode.U5_W2_D5.dto.ViaggioDto;
 import it.epicode.U5_W2_D5.exception.NotFoundException;
+import it.epicode.U5_W2_D5.model.StatoViaggio;
 import it.epicode.U5_W2_D5.model.Viaggio;
 import it.epicode.U5_W2_D5.service.ViaggioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,5 +42,10 @@ public class ViaggioController {
     @DeleteMapping("/{id}")
     public void deleteViaggio(@PathVariable Long id) throws NotFoundException {
         viaggioService.deleteViaggio(id);
+    }
+
+    @PatchMapping("/{id}/stato")
+    public Viaggio aggiornaStatoViaggio(@PathVariable Long id, @RequestParam("stato") StatoViaggio stato) throws NotFoundException {
+        return viaggioService.aggiornaStatoViaggio(id, stato);
     }
 }

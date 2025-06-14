@@ -42,4 +42,10 @@ public class PrenotazioneController {
     public void deletePrenotazione(@PathVariable Long id) throws NotFoundException {
         prenotazioneService.deletePrenotazione(id);
     }
+
+    @PostMapping("/assegna")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Prenotazione assegnaDipendenteAViaggio(@RequestBody PrenotazioneDto prenotazioneDto) throws NotFoundException {
+        return prenotazioneService.savePrenotazione(prenotazioneDto);
+    }
 }

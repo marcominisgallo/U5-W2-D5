@@ -7,7 +7,9 @@ import it.epicode.U5_W2_D5.service.DipendenteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -41,5 +43,10 @@ public class DipendenteController {
     @DeleteMapping("/{id}")
     public void deleteDipendente(@PathVariable Long id) throws NotFoundException {
         dipendenteService.deleteDipendente(id);
+    }
+
+    @PostMapping("/{id}/immagine")
+    public Dipendente uploadImmagineProfilo(@PathVariable Long id, @RequestParam("file") MultipartFile file) throws NotFoundException, IOException {
+        return dipendenteService.uploadImmagineProfilo(id, file);
     }
 }

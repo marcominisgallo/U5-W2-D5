@@ -31,6 +31,12 @@ public class PrenotazioneService {
         Viaggio viaggio = viaggioRepository.findById(dto.getViaggioId())
                 .orElseThrow(() -> new NotFoundException("Viaggio con id " + dto.getViaggioId() + " non trovato"));
 
+        // Controllo sovrapposizione
+        boolean esiste = prenotazioneRepository.existsByDipendenteIdAndDataRichiesta(dto.getDipendenteId(), dto.getDataRichiesta());
+        if (esiste) {
+            throw new IllegalArgumentException("Dipendente già impegnato in un viaggio in questa data");
+        }
+
         Prenotazione prenotazione = new Prenotazione();
         prenotazione.setDipendente(dipendente);
         prenotazione.setViaggio(viaggio);

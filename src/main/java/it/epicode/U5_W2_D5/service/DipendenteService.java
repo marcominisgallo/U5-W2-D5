@@ -6,7 +6,10 @@ import it.epicode.U5_W2_D5.model.Dipendente;
 import it.epicode.U5_W2_D5.repository.DipendenteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -45,5 +48,15 @@ public class DipendenteService {
     public void deleteDipendente(Long id) throws NotFoundException {
         Dipendente dipendente = getDipendente(id);
         dipendenteRepository.delete(dipendente);
+    }
+
+    public Dipendente uploadImmagineProfilo(Long id, MultipartFile file) throws NotFoundException, IOException {
+        Dipendente dipendente = getDipendente(id);
+        String uploadDir = "uploads/profili/";
+        new File(uploadDir).mkdirs();
+        String filePath = uploadDir + "dipendente_" + id + "_" + file.getOriginalFilename();
+        file.transferTo(new File(filePath));
+        dipendente.setImmagineProfilo(filePath);
+        return dipendenteRepository.save(dipendente);
     }
 }
